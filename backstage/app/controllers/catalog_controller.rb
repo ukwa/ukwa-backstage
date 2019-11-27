@@ -4,7 +4,6 @@ class CatalogController < ApplicationController
   include Blacklight::Catalog
   include Blacklight::Marc::Catalog
 
-
   configure_blacklight do |config|
     ## Per-controller specific SOLR endpoint:
     config.connection_config[:url] = ENV['TRACKDB_SOLR_URL'] || "http://trackdb:8983/solr/trackdb"
@@ -23,7 +22,8 @@ class CatalogController < ApplicationController
 
     ## Default parameters to send to solr for all search-like requests. See also SearchBuilder#processed_parameters
     config.default_solr_params = {
-      rows: 10
+      rows: 10,
+      q: '*:*'
     }
 
     # solr path which will be added to solr base url before the other solr params.

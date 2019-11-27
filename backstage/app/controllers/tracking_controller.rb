@@ -4,6 +4,8 @@ class TrackingController < ApplicationController
   include Blacklight::Catalog
   include Blacklight::Marc::Catalog
 
+  # Add a nav link to all indexes???
+  #add_nav_action :tracking
 
   configure_blacklight do |config|
     ## Per-controller specific SOLR endpoint:

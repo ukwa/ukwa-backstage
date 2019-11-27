@@ -2,16 +2,16 @@ Rails.application.routes.draw do
 
   mount Blacklight::Engine => '/'
   concern :marc_viewable, Blacklight::Marc::Routes::MarcViewable.new
-  root to: "catalog#index"
+  root to: "tracking#index"
   concern :searchable, Blacklight::Routes::Searchable.new
 
-  resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do
+  resource :tracking, only: [:index], as: 'tracking', path: '/tracking', controller: 'tracking' do
     concerns :searchable
   end
   devise_for :users
   concern :exportable, Blacklight::Routes::Exportable.new
 
-  resources :solr_documents, only: [:show], path: '/catalog', controller: 'catalog' do
+  resources :solr_documents, only: [:show], path: '/tracking', controller: 'tracking' do
     concerns [:exportable, :marc_viewable]
   end
 

@@ -24,7 +24,7 @@ services:
   backstage:
     build: .
     environment:
-     - "SOLR_URL=http://solr:8983/solr/discovery"
+     - "SOLR_URL=http://trackdb:8983/solr/tracking"
      - "TRACKDB_SOLR_URL=http://trackdb:8983/solr/tracking"
     ports:
      - 3000:3000

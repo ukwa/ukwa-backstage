@@ -5,9 +5,18 @@ Rails.application.routes.draw do
   root to: "catalog#index"
   concern :searchable, Blacklight::Routes::Searchable.new
 
+  # TrackDB
+
   resource :trackdb, only: [:index], as: 'trackdb', path: '/trackdb', controller: 'trackdb', constraints: { id: /.+/ } do
     concerns :searchable
   end
+  concern :exportable, Blacklight::Routes::Exportable.new
+
+  resources :solr_documents, only: [:show], path: '/trackdb', controller: 'trackdb', constraints: { id: /.+/ } do
+    concerns :exportable
+  end
+
+  # Catalog
 
   resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog', constraints: { id: /.+/ } do
     concerns :searchable

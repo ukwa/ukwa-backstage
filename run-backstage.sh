@@ -5,4 +5,5 @@ export TRACKDB_SOLR_URL=http://localhost:8983/solr/tracking
 
 # Run the app
 cd backstage
+bundle exec rails db:migrate 
 bundle exec rails s

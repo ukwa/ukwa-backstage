@@ -2,14 +2,30 @@ version: "2.0"
 
 services:
 
-  # Solr content instance for running tests against
+  # ----------------------------------------
+  # Backstage UI
+  # ----------------------------------------
+
+  backstage:
+    build: .
+    environment:
+     - "SOLR_URL=http://trackdb:8983/solr/tracking"
+     - "TRACKDB_SOLR_URL=http://trackdb:8983/solr/tracking"
+    ports:
+     - 3000:3000
+
+
+  # ----------------------------------------
+  # Solr instances for running tests against
+  # ----------------------------------------
+
   warc-solr:
     image: ukwa/webarchive-discovery-solr
     ports:
       - 8984:8983
 
   trackdb:
-    image: solr:7.7-slim
+    image: solr:8.3-slim
     ports:
       - 8983:8983
     volumes:
@@ -19,14 +35,4 @@ services:
       - docker-entrypoint.sh
       - solr-precreate
       - tracking
-
-  # Backstage UI
-  backstage:
-    build: .
-    environment:
-     - "SOLR_URL=http://trackdb:8983/solr/tracking"
-     - "TRACKDB_SOLR_URL=http://trackdb:8983/solr/tracking"
-    ports:
-     - 3000:3000
-
 

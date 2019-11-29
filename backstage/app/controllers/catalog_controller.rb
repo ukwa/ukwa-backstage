@@ -9,10 +9,13 @@ class CatalogController < ApplicationController
     return false
   end
 
-  configure_blacklight do |config|
-    ## Per-controller specific SOLR endpoint:
-    config.connection_config[:url] = ENV['TRACKDB_SOLR_URL'] || "http://trackdb:8983/solr/trackdb"
+  before_action :configure_solr_url
 
+  def configure_solr_url
+    blacklight_config.connection_config[:url] = ENV['CATALOG_SOLR_URL'] || "http://catalog:8983/solr/catalog"
+  end
+
+  configure_blacklight do |config|
     ## Class for sending and receiving requests from a search index
     # config.repository_class = Blacklight::Solr::Repository
     #

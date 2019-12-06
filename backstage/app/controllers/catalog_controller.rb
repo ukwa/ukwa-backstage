@@ -146,26 +146,30 @@ class CatalogController < ApplicationController
     # solr request handler? The one set in config[:default_solr_parameters][:qt],
     # since we aren't specifying it otherwise.
 
-    config.add_search_field 'all_fields', label: 'All Fields'
+    config.add_search_field 'all_fields', label: 'All Fields' do |field|
+      field.solr_parameters = {
+        qf: ['file_name_s', 'file_path_s']
+      }
+    end
 
     # Now we see how to over-ride Solr request handler defaults, in this
     # case for a BL "search field", which is really a dismax aggregate
     # of Solr search fields.
 
-    config.add_search_field('file_name_s') do |field|
+    config.add_search_field('file_name', label: 'Filename') do |field|
       # solr_parameters hash are sent to Solr as ordinary url query params.
       field.solr_parameters = {
-        'spellcheck.dictionary': 'title',
-        qf: '${title_qf}',
-        pf: '${title_pf}'
+        'spellcheck.dictionary': 'file_name_s',
+        qf: 'file_name_s',
+        pf: 'file_name_s'
       }
     end
 
-    config.add_search_field('file_path_s') do |field|
+    config.add_search_field('file_path') do |field|
       field.solr_parameters = {
         'spellcheck.dictionary': 'file_path_s',
-        qf: '${author_qf}',
-        pf: '${author_pf}'
+        qf: 'file_path_s',
+        pf: 'file_path_s'
       }
     end
 

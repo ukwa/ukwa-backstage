@@ -16,6 +16,8 @@ RUN bundle config --global frozen 1
 
 COPY backstage/ .
 
+ENV DEPLOY_RELATIVE_URL_ROOT=/intranet
+
 RUN bundle exec rails db:migrate RAILS_ENV=development
 RUN RAILS_ENV=development rake assets:precompile
 

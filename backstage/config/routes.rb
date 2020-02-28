@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+ # Set-up optional prefix
+ scope ENV['DEPLOY_RELATIVE_URL_ROOT'] || '/' do
 
   mount Blacklight::Engine => '/'
   concern :marc_viewable, Blacklight::Marc::Routes::MarcViewable.new
@@ -35,5 +37,6 @@ Rails.application.routes.draw do
       delete 'clear'
     end
   end
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+ end
+ # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
